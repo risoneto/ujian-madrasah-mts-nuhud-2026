@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBT Ujian Madrasah</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f2027,#2c5364);
+color:white;
+}
+
+.container{max-width:1000px;margin:auto;padding:20px;}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+
+h2,h3{margin:5px 0;}
+
+select,input,button{
+width:100%;
+padding:10px;
+margin-top:6px;
+border:none;
+border-radius:8px;
+}
+
+button{
+background:#00c6ff;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{background:#00ffcc;}
+
+.lock{background:#555;}
+.open{background:#00ff88;color:black;}
+
+.timer{
+text-align:center;
+font-size:22px;
+margin-bottom:10px;
+color:#00ffcc;
+}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+<h2>🔐 LOGIN PESERTA</h2>
+
+<select id="nama">
+<option value="">-- Pilih Nama --</option>
+<option>AINA UILDA ZAHRAN</option>
+<option>ALDA NIHYATUL ARIFAH</option>
+<option>ANUGRAH RADITIA ALFARIS</option>
+<option>AYUNI NUR ROHMAH</option>
+<option>ELIZA NUR KHAELA APRILIA</option>
+<option>FARIDOTUL MUSYAFAH</option>
+<option>FIANA LAILANNISA</option>
+<option>IKHBAL FERDIANSYAH S</option>
+<option>IMELDA KUSUMA WARDANI</option>
+<option>IRMA ALIFAH</option>
+<option>LESTARI PUSPA ANINGSIH</option>
+<option>MIFTAHUDIN LATIF</option>
+<option>MILLA BELLA SAPUTRI</option>
+<option>MOHAMAD SAFIKAL BARISYA</option>
+<option>MUTIA DINI SYARIFAH</option>
+<option>NAJWA RIZQI MULIYA A</option>
+<option>NAURA SILQI AULIYA</option>
+<option>PERTIWI ZAHRATUL SIFA</option>
+<option>PUTRI RAHMADHANI</option>
+<option>RATNA ANTIKA</option>
+<option>RIFKI RAMADHAN</option>
+<option>RISKI SAPUTRA</option>
+<option>SAIFANI IJTIMAIYAH</option>
+<option>VIRLY MAULIDA IHVANI</option>
+<option>WAHDINA NUR AF'IDAH</option>
+<option>YUDIKA PRASTYAWAN</option>
+<option>ZAHIDA QALBI NADHIFA</option>
+<option>ZALFA ALYA NAZIFAH</option>
+<option>ACHMAD FIROS ASEGAF</option>
+<option>ARDI SAPUTRA</option>
+<option>AYUB DZUN NURAIN</option>
+<option>CATUR ADITYA PANGESTU</option>
+<option>HASNA AFIFATUL AZAYYA</option>
+<option>HESTI RAHMANIA</option>
+<option>MISEL AYU FIDIA NINGSIH</option>
+<option>MUHAMMAD BAYU SAPUTRA</option>
+<option>MUHAMMAD IKHYAN ZEN</option>
+<option>RESTI DWI MAITSAA</option>
+<option>RIZKI ALIF FUDIN</option>
+<option>AFRILIA ELFINA</option>
+<option>ASKA SENDI SAPUTRA</option>
+<option>AZNAA DURROTA MAJID</option>
+<option>DANIKA ESYA'UQI HANTORO</option>
+<option>DEWI HAYATUN HASANAH</option>
+<option>FAZA ILYA MAULIDIA</option>
+<option>FERDI SETIAWAN</option>
+<option>FIOLA JULIASIH</option>
+<option>GIBRAN SHAFI'I</option>
+<option>IAN DONOVAN</option>
+<option>M. AUFAA AL FATIKH</option>
+<option>M. ZIDAN SHOFA BARIRO</option>
+<option>MAEZA MAULANA SUTOMO</option>
+<option>MOHAMMAD DAVA P</option>
+<option>MUCHAMMAD LAFA SOFIN M</option>
+<option>MUHAMAD ZUL FAHMI</option>
+<option>MUHAMMAD IKHSAN ASY'ARI</option>
+<option>NADIFA LANA MOANA TRI K</option>
+<option>NAJMA ZULFA AMANIA</option>
+<option>NGINAYATUL MUWAFIQOH</option>
+<option>REZA FIRJATULLOH</option>
+<option>SANDI MUHAERON</option>
+<option>SELA FEBRIANA</option>
+<option>TITI NURJANAH</option>
+<option>YUGO ADITYA PRATAMA</option>
+<option>ZAHROTUN SALSABIILAAH</option>
+</select>
+
+<button onclick="login()">Masuk Ujian</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+
+<div class="timer" id="timer">--:--</div>
+
+<div class="card">
+<h2>📊 Dashboard</h2>
+<p>Total Mapel: <b>16</b></p>
+<p>Periode: 2 – 11 Mei 2026</p>
+</div>
+
+<div id="jadwal"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let namaUser="";
+let aktif=false;
+let waktu=5400;
+
+// DATA MAPEL
+let mapel=[
+
+{n:"PJOK",t:"2026-05-02",m:"07:30",s:"09:00",l:"https://forms.gle/iQRBJXoazVSgRqS6A",k:"123"},
+{n:"ASWAJA",t:"2026-05-02",m:"09:30",s:"11:00",l:"https://forms.gle/Rb9oMzeXGKCCq1rZ9",k:"123"},
+{n:"KITAB KUNING",t:"2026-05-02",m:"11:30",s:"13:00",l:"",k:"123"},
+
+{n:"BAHASA INDONESIA",t:"2026-05-04",m:"07:30",s:"09:30",l:"https://forms.gle/RWxJRET5PsmxesQS8",k:"123"},
+{n:"AL QUR'AN HADITS",t:"2026-05-04",m:"10:00",s:"11:30",l:"https://forms.gle/4WasoEc7W24LRP1X7",k:"123"},
+
+{n:"BAHASA INGGRIS",t:"2026-05-05",m:"07:30",s:"09:30",l:"https://forms.gle/eA7bS2UZDQhQViy38",k:"123"},
+{n:"AKIDAH AKHLAK",t:"2026-05-05",m:"10:00",s:"11:30",l:"https://forms.gle/qWfJC793EygbYyY46",k:"123"},
+
+{n:"MATEMATIKA",t:"2026-05-06",m:"07:30",s:"09:30",l:"https://forms.gle/kwL6izDmTBwg2qwx9",k:"123"},
+{n:"FIKIH",t:"2026-05-06",m:"10:00",s:"11:30",l:"https://forms.gle/KUrWCGbYYhbev8Ri7",k:"123"},
+
+{n:"IPA",t:"2026-05-07",m:"07:30",s:"09:30",l:"https://forms.gle/HtSTDQtKpRv9cM338",k:"123"},
+{n:"SKI",t:"2026-05-07",m:"10:00",s:"11:30",l:"https://forms.gle/ng8sVxViBjiw5DfT7",k:"123"},
+
+{n:"PENDIDIKAN PANCASILA",t:"2026-05-08",m:"07:00",s:"09:00",l:"https://forms.gle/sGe7jvXERaLh5tuj8",k:"123"},
+{n:"SENI BUDAYA",t:"2026-05-08",m:"09:30",s:"11:00",l:"https://forms.gle/JFa9xz6ys1hxZBaaA",k:"123"},
+
+{n:"IPS",t:"2026-05-09",m:"07:30",s:"09:30",l:"https://forms.gle/3GMXZX6WFs6384UFA",k:"123"},
+{n:"BAHASA JAWA",t:"2026-05-09",m:"10:00",s:"11:30",l:"https://forms.gle/AVCZjCxcDX3uj5ME6",k:"123"},
+
+{n:"BAHASA ARAB",t:"2026-05-11",m:"07:30",s:"09:30",l:"",k:"123"},
+{n:"INFORMATIKA",t:"2026-05-11",m:"10:00",s:"11:30",l:"",k:"123"}
+
+];
+
+// LOGIN
+function login(){
+let n=document.getElementById("nama").value;
+if(!n){alert("Pilih nama!");return;}
+namaUser=n;
+
+document.getElementById("loginBox").style.display="none";
+document.getElementById("dashboard").classList.remove("hidden");
+
+document.documentElement.requestFullscreen();
+render();
+}
+
+// CEK AKTIF
+function aktifMapel(m){
+let now=new Date();
+let t=now.toISOString().split("T")[0];
+let j=now.getHours().toString().padStart(2,'0')+":"+
+now.getMinutes().toString().padStart(2,'0');
+
+return t===m.t && j>=m.m && j<=m.s;
+}
+
+// RENDER
+function render(){
+let html="";
+mapel.forEach((m,i)=>{
+let a=aktifMapel(m);
+
+html+=`
+<div class="card">
+<b>${m.n}</b><br>
+${m.t} | ${m.m}-${m.s}<br>
+
+<input placeholder="Token" id="t${i}">
+<button class="${a&&m.l?'open':'lock'}" onclick="mulai(${i})">
+${a?'Mulai':'Terkunci'}
+</button>
+</div>`;
+});
+document.getElementById("jadwal").innerHTML=html;
+}
+
+// MULAI
+function mulai(i){
+let m=mapel[i];
+
+if(!aktifMapel(m)){alert("Belum waktunya");return;}
+if(!m.l){alert("Belum tersedia");return;}
+
+let t=document.getElementById("t"+i).value;
+if(t!==m.k){alert("Token salah");return;}
+
+aktif=true;
+
+let url=m.l+"?entry.1234567890="+encodeURIComponent(namaUser);
+window.open(url,"_blank");
+}
+
+// TIMER
+setInterval(()=>{
+let m=Math.floor(waktu/60);
+let s=waktu%60;
+document.getElementById("timer").innerHTML=
+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
+waktu--;
+},1000);
+
+// ANTI TAB
+document.addEventListener("visibilitychange",()=>{
+if(document.hidden && aktif){
+alert("Keluar dari ujian!");
+window.close();
+}
+});
+
+// BLOK
+document.onkeydown=function(e){
+if(e.keyCode==123)return false;
+if(e.ctrlKey && e.key==='u')return false;
+};
+document.addEventListener("contextmenu",e=>e.preventDefault());
+
+</script>
+
+</body>
+</html>
